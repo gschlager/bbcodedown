@@ -22,7 +22,7 @@
   "scripts": {
     "build": "rollup -c",
     "lint": "eslint --fix 'src/**/*.ts' 'test/**/*.ts'",
-    "test": "jest"
+    "test": "jest --coverage"
   },
   "jest": {
     "moduleFileExtensions": [

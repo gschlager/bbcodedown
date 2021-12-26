@@ -2,8 +2,8 @@ export class Node {
   public parent?: Node;
   public previous?: Node;
   public next?: Node;
-  private name: string;
-  private readonly children: Node[];
+  public readonly children: Node[];
+  public name: string;
 
   constructor(name: string) {
     this.name = name;
