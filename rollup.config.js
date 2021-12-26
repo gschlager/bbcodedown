@@ -16,11 +16,13 @@ export default [
       {
         file: `${name}.js`,
         format: "cjs",
+        exports: "auto",
         sourcemap: true,
       },
       {
         file: `${name}.mjs`,
         format: "es",
+        exports: "auto",
         sourcemap: true,
       },
     ],
