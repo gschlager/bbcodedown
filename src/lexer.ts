@@ -12,20 +12,24 @@ export function* lex(text: string) {
 
     if (result) {
       if (result.index > pos) {
-        yield { type: "TEXT", text: text.slice(pos, result.index) };
+        yield new TextToken(text.slice(pos, result.index));
       }
+
       pos = result.index + result[0].length;
       const tag = result[2].replace(/:[0-9a-f]*$/i, "").toLowerCase();
+
       if (result[1]) {
-        yield { type: "TAG_END", tag, source: result[0] };
+        yield new TagEndToken(tag, result[0]);
       } else {
         const attributes: { [key: string]: string } = {};
+
         if (result[3] && result[3].length > 0) {
           let option = unquote(result[3].trim());
           if (option.length > 0) {
             attributes["option"] = option;
           }
         }
+
         if (result[4] && result[4].length > 0) {
           for (let [, name, value] of result[4].matchAll(
             BBCODE_ATTRIBUTE_REGEXP
@@ -36,10 +40,11 @@ export function* lex(text: string) {
             }
           }
         }
-        yield { type: "TAG_START", tag, attributes, source: result[0] };
+
+        yield new TagStartToken(tag, attributes, result[0]);
       }
     } else {
-      yield { type: "TEXT", text: text.slice(pos) };
+      yield new TextToken(text.slice(pos));
       return;
     }
   }
@@ -50,4 +55,20 @@ function unquote(text: string): string {
     ("'" === text[0] || '"' === text[0])
     ? text.slice(1, -1)
     : text;
+}
+
+export class TagStartToken {
+  constructor(
+    public tag: string,
+    public attributes: { [key: string]: string },
+    public source: string
+  ) {}
+}
+
+export class TagEndToken {
+  constructor(public tag: string, public source: string) {}
+}
+
+export class TextToken {
+  constructor(public text: string) {}
 }

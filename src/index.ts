@@ -1,5 +1,5 @@
-import { Node, TagNode, TextNode } from "./nodes";
+import { parse } from "./parser";
 
-export default {
-  foo: new Node(""),
-};
+export function toMarkdown(text: string) {
+  parse(text);
+}

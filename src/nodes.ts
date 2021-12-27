@@ -1,14 +1,10 @@
 export class Node {
-  public parent?: Node;
-  public previous?: Node;
-  public next?: Node;
-  public readonly children: Node[];
-  public name: string;
+  parent?: Node;
+  previous?: Node;
+  next?: Node;
+  readonly children: Node[] = [];
 
-  constructor(name: string) {
-    this.name = name;
-    this.children = [];
-  }
+  constructor(readonly name: string) {}
 
   push(node: Node) {
     const last = this.children[this.children.length - 1];
@@ -45,19 +41,13 @@ export class Node {
 }
 
 export class TextNode extends Node {
-  public text: string;
-
-  constructor(text: string) {
+  constructor(public text: string) {
     super("text");
-    this.text = text;
   }
 }
 
 export class TagNode extends Node {
-  public attributes: {};
-
-  constructor(tag: string, attributes = {}) {
+  constructor(tag: string, readonly attributes = {}) {
     super(tag);
-    this.attributes = attributes;
   }
 }
