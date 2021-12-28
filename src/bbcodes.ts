@@ -1,8 +1,41 @@
-const SELF_CLOSING_BBCODE_TAGS = new Set(["br", "hr"]);
-const PREFORMATTED_BBCODE_TAGS = new Set(["code", "pre"]);
+import { TagNode } from "./nodes";
 
-export const BBCodes = {
-  allowed: new Set(),
-  self_closing: new Set(["br", "hr"]),
-  preformatted: new Set(["code", "pre"]),
+interface ConverterFunction {
+  (node: TagNode): void;
+}
+
+interface BBCode {
+  tags: string[];
+  selfClosing: boolean;
+  preformatted: boolean;
+  converter: ConverterFunction;
+}
+
+type BBCodesType = {
+  readonly allowed: Set<string>;
+  readonly selfClosing: Set<string>;
+  readonly preformatted: Set<string>;
+  readonly converters: Map<string, ConverterFunction>;
 };
+
+export const BBCodes: BBCodesType = {
+  allowed: new Set<string>(),
+  selfClosing: new Set<string>(),
+  preformatted: new Set<string>(),
+  converters: new Map<string, ConverterFunction>(),
+};
+
+export function registerBBCode(bbCode: BBCode) {
+  for (const tag of bbCode.tags) {
+    BBCodes.allowed.add(tag);
+    BBCodes.converters.set(tag, bbCode.converter);
+
+    if (bbCode.selfClosing) {
+      BBCodes.selfClosing.add(tag);
+    }
+
+    if (bbCode.preformatted) {
+      BBCodes.preformatted.add(tag);
+    }
+  }
+}

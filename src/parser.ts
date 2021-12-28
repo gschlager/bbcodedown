@@ -16,7 +16,7 @@ export function parse(text: string): Node {
       ) {
         const tag = new TagNode(token.tag, token.attributes);
 
-        if (BBCodes.self_closing.has(token.tag)) {
+        if (BBCodes.selfClosing.has(token.tag)) {
           current.push(tag);
         } else {
           handleStartTag(token, current, tag);
@@ -55,7 +55,7 @@ function handleStartTag(token: TagStartToken, current: Node, tag: TagNode) {
 }
 
 function handleEndTag(token: TagEndToken, current: Node): Node {
-  if (BBCodes.self_closing.has(token.tag)) {
+  if (BBCodes.selfClosing.has(token.tag)) {
     return current;
   }
 

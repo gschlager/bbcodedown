@@ -1,5 +1,7 @@
-import { parse } from "./parser";
+import { convert } from "./convert";
 
-export function toMarkdown(text: string) {
-  parse(text);
+import "./bbcodes/bold";
+
+export function toMarkdown(text: string): string {
+  return convert(text);
 }
