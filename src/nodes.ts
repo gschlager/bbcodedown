@@ -22,6 +22,7 @@ export class Node {
   }
 
   hasAncestor(ancestor: string) {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     let current: Node | undefined = this;
 
     while ((current = current.parent)) {

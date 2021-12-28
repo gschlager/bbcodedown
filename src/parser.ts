@@ -6,7 +6,7 @@ export function parse(text: string): Node {
   const root = new Node("");
   let current = root;
 
-  for (let token of lex(text)) {
+  for (const token of lex(text)) {
     if (token instanceof TextToken) {
       current.push(new TextNode(token.text));
     } else if (token instanceof TagStartToken) {
@@ -27,7 +27,9 @@ export function parse(text: string): Node {
       }
     } else if (token instanceof TagEndToken) {
       if (token.tag === current?.name) {
-        current = current.parent!;
+        if (current.parent) {
+          current = current.parent;
+        }
       } else {
         current = handleEndTag(token, current);
       }

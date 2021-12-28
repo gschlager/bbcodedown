@@ -1,7 +1,7 @@
 const BBCODE_TAG_REGEXP =
-  /\[(\/?)([a-z*.][a-z0-9]*(?::[0-9a-f]*)?)(?: *= *("[^"]*"|'[^']*'|[^\[\]]*?) *)?((?: +\w+ *= *(?:"[^"]*"|'[^']*'|[^ \[\]]*))*)\]/gi;
+  /\[(\/?)([a-z*.][a-z0-9]*(?::[0-9a-f]*)?)(?: *= *("[^"]*"|'[^']*'|[^[\]]*?) *)?((?: +\w+ *= *(?:"[^"]*"|'[^']*'|[^ [\]]*))*)\]/gi;
 
-const BBCODE_ATTRIBUTE_REGEXP = /(\w+) *= *("[^"]*"|'[^']*'|[^ \[\]]*)/gi;
+const BBCODE_ATTRIBUTE_REGEXP = /(\w+) *= *("[^"]*"|'[^']*'|[^ [\]]*)/gi;
 
 export function* lex(text: string) {
   let pos = 0;
@@ -24,13 +24,14 @@ export function* lex(text: string) {
         const attributes: { [key: string]: string } = {};
 
         if (result[3] && result[3].length > 0) {
-          let option = unquote(result[3].trim());
+          const option = unquote(result[3].trim());
           if (option.length > 0) {
             attributes["option"] = option;
           }
         }
 
         if (result[4] && result[4].length > 0) {
+          // eslint-disable-next-line prefer-const
           for (let [, name, value] of result[4].matchAll(
             BBCODE_ATTRIBUTE_REGEXP
           )) {
