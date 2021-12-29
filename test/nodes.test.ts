@@ -2,8 +2,6 @@ import { Node, TextNode } from "../src/nodes";
 
 describe("node", () => {
   it("appends text", () => {
-    expect.assertions(3);
-
     const root = new Node("");
     root.push(new TextNode("Hello"));
     root.push(new TextNode(" world!"));

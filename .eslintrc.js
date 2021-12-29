@@ -13,6 +13,12 @@ module.exports = {
       env: { "jest/globals": true },
       plugins: ["jest", "jest-formatting"],
       extends: ["plugin:jest/all", "plugin:jest-formatting/recommended"],
+      rules: {
+        "jest/prefer-expect-assertions": [
+          "warn",
+          { onlyFunctionsWithAsyncKeyword: true },
+        ],
+      },
     },
   ],
 };
