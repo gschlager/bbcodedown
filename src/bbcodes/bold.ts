@@ -16,6 +16,7 @@ registerBBCode({
         } else if (/^\s+$/.test(line)) {
           return " ";
         } else if (line.includes("*") && line.includes("_")) {
+          // TODO Escape special characters in text nodes instead of switching to HTML
           return hoistWhitespaces(line, `<strong>`, `</strong>`);
         } else {
           const delimiter = line.includes("*") ? "__" : "**";
