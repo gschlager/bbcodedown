@@ -48,7 +48,10 @@ export class TextNode extends Node {
 }
 
 export class TagNode extends Node {
-  constructor(tag: string, readonly attributes = {}) {
+  constructor(
+    tag: string,
+    readonly attributes: { [key: string]: string } = {}
+  ) {
     super(tag);
   }
 }

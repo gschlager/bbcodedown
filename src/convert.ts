@@ -56,8 +56,16 @@ function visit(node: Node) {
   return converter ? converter(<TagNode>node) : traverse(node);
 }
 
-function hoistedCodeId(i: number) {
+function hoistedCodeId(i: number): string {
   return `§_DISCOURSE_HOISTED_CODE_${i}_§`;
+}
+
+export function nextHoistedCodeId(): string {
+  return hoistedCodeId(_hoistedCode.length);
+}
+
+export function addHoistedCode(code: string): void {
+  _hoistedCode.push(code);
 }
 
 export function hoistWhitespaces(line: string, prefix: string, suffix: string) {
