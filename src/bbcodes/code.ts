@@ -71,7 +71,7 @@ function convertCodeBlock(node: TagNode, language: string | null = null) {
     }
   } else {
     addHoistedCode(code);
-    return code.includes("`") ? `[code]${id}[/code]` : `\`${id}\``;
+    return convertInline(code, id);
   }
 }
 
@@ -98,4 +98,33 @@ function isBlock(node: TagNode, code: string): boolean {
 
 function getNodeText(node: Node | undefined): string | null {
   return node && node instanceof TextNode ? node.text : null;
+}
+
+function convertInline(code: string, id: string): string {
+  let hasSingleBacktick = false;
+  let startsOrEndsWithBacktick = false;
+  let maxBackticks = 0;
+
+  const backtickMatches = code.match(/`+/g);
+
+  if (backtickMatches) {
+    for (const match of backtickMatches) {
+      if (match.length == 1) {
+        hasSingleBacktick = true;
+      }
+      if (match.length > maxBackticks) {
+        maxBackticks = match.length;
+      }
+    }
+
+    startsOrEndsWithBacktick = code.startsWith("`") || code.endsWith("`");
+  }
+
+  let fence = "`";
+
+  if (hasSingleBacktick) {
+    fence = fence.repeat(maxBackticks + 1);
+  }
+
+  return startsOrEndsWithBacktick ? `${fence} ${id} ${fence}` : `${fence}${id}${fence}`;
 }
