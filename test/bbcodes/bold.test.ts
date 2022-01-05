@@ -14,9 +14,7 @@ describe("bold", () => {
   });
 
   it("uses HTML when text contains * and _", () => {
-    expect(toMarkdown("[b]* lorem_ipsum[/b]")).toBe(
-      "<strong>* lorem_ipsum</strong>"
-    );
+    expect(toMarkdown("[b]* lorem_ipsum[/b]")).toBe("<strong>* lorem_ipsum</strong>");
   });
 
   it("uses __ if text contains *", () => {

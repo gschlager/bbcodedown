@@ -11,21 +11,12 @@ export function convert(text: string): string {
   _depth = 0;
   _hoistedCode = [];
 
-  const cleaned = text.replace(
-    /<\/?\s*br\s*\/?>|\r\n?|[\u2028\u2029]+/gi,
-    "\n"
-  );
+  const cleaned = text.replace(/<\/?\s*br\s*\/?>|\r\n?|[\u2028\u2029]+/gi, "\n");
   const root = parse(cleaned);
 
   let converted = traverse(root)
-    .replace(
-      /^(\s+)/gm,
-      (m: string) => `${m.includes("\n") ? "\n" : ""}${m.trimStart()}`
-    )
-    .replace(
-      /[ \f\t\v\u00a0\u1680\u2000-\u200a\u202f\u205f\u3000\ufeff]+/g,
-      " "
-    )
+    .replace(/^(\s+)/gm, (m: string) => `${m.includes("\n") ? "\n" : ""}${m.trimStart()}`)
+    .replace(/[ \f\t\v\u00a0\u1680\u2000-\u200a\u202f\u205f\u3000\ufeff]+/g, " ")
     .replace(/\n{3,}/g, "\n\n");
 
   for (let i = 0; i < _hoistedCode.length; i++) {

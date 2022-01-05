@@ -10,10 +10,7 @@ export function parse(text: string): Node {
     if (token instanceof TextToken) {
       current.push(new TextNode(token.text));
     } else if (token instanceof TagStartToken) {
-      if (
-        BBCodes.allowed.has(token.tag) &&
-        !BBCodes.preformatted.has(current.name)
-      ) {
+      if (BBCodes.allowed.has(token.tag) && !BBCodes.preformatted.has(current.name)) {
         const tag = new TagNode(token.tag, token.attributes);
 
         if (BBCodes.selfClosing.has(token.tag)) {

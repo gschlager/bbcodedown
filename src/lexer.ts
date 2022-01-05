@@ -32,9 +32,7 @@ export function* lex(text: string) {
 
         if (result[4] && result[4].length > 0) {
           // eslint-disable-next-line prefer-const
-          for (let [, name, value] of result[4].matchAll(
-            BBCODE_ATTRIBUTE_REGEXP
-          )) {
+          for (let [, name, value] of result[4].matchAll(BBCODE_ATTRIBUTE_REGEXP)) {
             value = unquote(value.trim());
             if (value.length > 0) {
               attributes[name.toLowerCase()] = value;
@@ -52,8 +50,7 @@ export function* lex(text: string) {
 }
 
 function unquote(text: string): string {
-  return text[0] === text[text.length - 1] &&
-    ("'" === text[0] || '"' === text[0])
+  return text[0] === text[text.length - 1] && ("'" === text[0] || '"' === text[0])
     ? text.slice(1, -1)
     : text;
 }

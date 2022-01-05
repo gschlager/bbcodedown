@@ -34,9 +34,7 @@ export class Node {
     return false;
   }
 
-  select(
-    selector: (value: Node, index: number, array: Node[]) => value is Node
-  ) {
+  select(selector: (value: Node, index: number, array: Node[]) => value is Node) {
     return this.children.filter(selector);
   }
 }
@@ -48,10 +46,7 @@ export class TextNode extends Node {
 }
 
 export class TagNode extends Node {
-  constructor(
-    tag: string,
-    readonly attributes: { [key: string]: string } = {}
-  ) {
+  constructor(tag: string, readonly attributes: { [key: string]: string } = {}) {
     super(tag);
   }
 }

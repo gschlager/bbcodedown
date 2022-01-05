@@ -43,7 +43,7 @@
       "**/test/**/*.test.ts"
     ]
   },
-  "dependencies": {
-    "tsheredoc": "^1.0.0"
+  "prettier": {
+    "printWidth": 100
   }
 }

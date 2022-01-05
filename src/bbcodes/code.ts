@@ -93,10 +93,7 @@ function isBlock(node: TagNode, code: string): boolean {
   const previousText = getNodeText(node.previous);
   const nextText = getNodeText(node.next);
 
-  return (
-    (!previousText || previousText.endsWith("\n")) &&
-    (!nextText || nextText.startsWith("\n"))
-  );
+  return (!previousText || previousText.endsWith("\n")) && (!nextText || nextText.startsWith("\n"));
 }
 
 function getNodeText(node: Node | undefined): string | null {
